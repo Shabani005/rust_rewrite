@@ -2,11 +2,13 @@
 #[allow(dead_code)]
 use statrs::distribution::{Normal, Continuous, Uniform};
 use statrs::statistics::{Distribution, Statistics};
-
+use rand::{rng, thread_rng, Rng};
+use math::*;
+mod math;
 
 
 fn func(inp: f64) -> f64{
-    return 0.5*inp //placeholder for abs and exp
+    return 0.5*(-custom_exp(abs_f64(inp)))//placeholder for abs and exp
 }
 
 fn metropolis_hasting(x_0: f64, n: i32, s: f64) -> Vec<f64>{
@@ -21,8 +23,10 @@ fn metropolis_hasting(x_0: f64, n: i32, s: f64) -> Vec<f64>{
         let r: f64 = func(x_star) / func(xi_minus1);
         let uni = Uniform::new(0.0, 1.0).unwrap();
         let u: f64 = uni.pdf(1.0);
+        let mut rng = rng();
+        let gg: f64 = 1.0; // u will be a random uniform number between 0.0 and 1.0
 
-        if u < r{
+        if gg < r{
             x_values.push(x_star);
             accepted += 1;
         } 
